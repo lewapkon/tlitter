@@ -6,8 +6,10 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 
+@python_2_unicode_compatible
 class Person(AbstractUser):
-    pass
+    def __str__(self):
+        return self.get_full_name()
 
 
 @python_2_unicode_compatible
@@ -17,4 +19,4 @@ class Tweet(models.Model):
     timestamp = models.DateTimeField('date published')
 
     def __str__(self):
-        return '%s: %s'.format(self.author, self.body)
+        return '{}: {}'.format(self.author, self.body)
