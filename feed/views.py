@@ -3,8 +3,8 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views.generic import CreateView, DeleteView, ListView
 
+from .models import Tweet, Person
 from .forms import TweetForm
-from .models import Tweet
 
 
 class TweetDeleteView(DeleteView):
@@ -50,3 +50,13 @@ class TweetListView(ListView):
         context = super(TweetListView, self).get_context_data(**kwargs)
         context['new_tweet_form'] = TweetForm()
         return context
+
+
+class FriendsTweetsView(ListView):
+    model = Tweet
+    template_name = 'friends-tweets.html'
+    context_object_name = "tweet_list"
+    paginate_by = 5
+
+    def get_queryset(self):
+        return Tweet.objects.filter(author__in=Person.objects.get(pk=self.request.user.pk).following.all())

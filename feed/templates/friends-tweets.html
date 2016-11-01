@@ -1,0 +1,5 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% include 'tweets.html' with tweets=tweet_list name="Friends'" %}
+{% endblock %}

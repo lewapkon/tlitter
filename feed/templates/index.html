@@ -5,6 +5,7 @@
 {% block content %}
     {% if user.is_authenticated %}
         {% include 'new_tweet_form.html' with form=new_tweet_form %}
+        <a href="{% url 'friends_tweets' %}">Show friends' tłits</a>
     {% endif %}
     {% include 'tweets.html' with name="All" tweets=tweet_list %}
 {% endblock %}
