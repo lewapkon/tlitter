@@ -19,7 +19,7 @@ class Person(AbstractUser):
 class Tweet(models.Model):
     author = models.ForeignKey(Person, on_delete=models.CASCADE)
     body = models.CharField(max_length=140)
-    timestamp = models.DateTimeField('date published')
+    timestamp = models.DateTimeField('date published', auto_now=True)
 
     class Meta:
         ordering = ['-timestamp']

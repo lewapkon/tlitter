@@ -1,8 +1,16 @@
 {% extends "base.html" %}
 
 {% block content %}
+    {% if user.is_authenticated %}
+        <form action="{% url 'new_tweet' %}" method="post">
+            {% csrf_token %}
+            {{ form.body }}
+            <input type="submit" value="Tłit" />
+        </form>
+    {% endif %}
+
     {% if tweet_list %}
-        <h2>Tweets</h2>
+        <h2>Tłits</h2>
         <ul>
             {% for tweet in tweet_list %}
                 <li class="tweet">
@@ -12,6 +20,12 @@
                         <span class="timestamp">{{ tweet.timestamp }}</span>
                     </div>
                     <div class="context">{{ tweet.body }}</div>
+                    {% if tweet.author == user %}
+                        <form action="{% url 'delete_tweet' tweet.pk %}" method="post">
+                            {% csrf_token %}
+                            <input type="submit" value="Delete tłit" />
+                        </form>
+                    {% endif %}
                 </li>
             {% endfor %}
         </ul>
@@ -31,6 +45,6 @@
             </div>
         {% endif %}
     {% else %}
-        <p>No tweets found!</p>
+        <p>No tłits found!</p>
     {% endif %}
 {% endblock %}
