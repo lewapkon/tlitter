@@ -6,14 +6,22 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-        <title>Tłitter</title>
+        <title>{% block title %}Tłitter{% endblock %}</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
         <link href='//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
         <link href="{% sass_src 'css/main.scss' %}" rel="stylesheet" type="text/css" />
     </head>
     <body>
         <div class="page-header">
-            <h1><a href="/">Tłiter</a></h1>
+            <h1><a href="{% url 'index' %}">Tłiter</a></h1>
+            {% if user.is_authenticated %}
+                <span>Hello {{ user }}</span> |
+                <a href="{% url 'logout' %}">Logout</a> |
+                <a href="{% url 'password_change' %}">Change password</a>
+            {% else %}
+                <a href="{% url 'login' %}">Login</a> |
+                <a href="{% url 'register' %}">Register</a>
+            {% endif %}
         </div>
 
         <div class="content container">
