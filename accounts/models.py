@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-
-
 from django.contrib.auth.models import AbstractUser
 from django.utils.encoding import python_2_unicode_compatible
 

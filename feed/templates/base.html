@@ -15,9 +15,10 @@
         <div class="page-header">
             <h1><a href="{% url 'index' %}">Tłiter</a></h1>
             {% if user.is_authenticated %}
-                <span>Hello <a href="{% url 'person' user.username %}">{{ user }}</a> </span> |
+                <span>Hello <a href="{% url 'person' user.username %}">{{ user }}</a></span> |
                 <a href="{% url 'logout' %}">Logout</a> |
-                <a href="{% url 'password_change' %}">Change password</a>
+                <a href="{% url 'password_change' %}">Change password</a> |
+                <a href="{% url 'person_update' %}">Update profile</a>
             {% else %}
                 <a href="{% url 'login' %}">Login</a> |
                 <a href="{% url 'register' %}">Register</a>

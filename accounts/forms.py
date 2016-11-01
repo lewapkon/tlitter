@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-
-
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 
@@ -14,3 +12,4 @@ class RegistrationForm(UserCreationForm):
     class Meta:
         model = Person
         fields = ('username', 'first_name', 'last_name')
+

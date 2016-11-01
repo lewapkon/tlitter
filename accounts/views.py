@@ -2,8 +2,7 @@
 from __future__ import print_function
 from django.contrib.auth import authenticate, login
 from django.urls import reverse_lazy
-from django.views.generic import DetailView
-from django.views.generic import FormView
+from django.views.generic import DetailView, FormView, UpdateView
 
 from feed.models import Tweet
 from .models import Person
@@ -22,6 +21,17 @@ class RegistrationView(FormView):
         user = authenticate(username=username, password=password)
         login(self.request, user)
         return super(RegistrationView, self).form_valid(form)
+
+
+class PersonEditView(UpdateView):
+    template_name = 'registration/person_update.html'
+    fields = ['first_name', 'last_name']
+
+    def get_object(self, queryset=None):
+        return self.request.user
+
+    def get_success_url(self):
+        return reverse_lazy('person', kwargs={'slug': self.get_object().username})
 
 
 class PersonDetailView(DetailView):
