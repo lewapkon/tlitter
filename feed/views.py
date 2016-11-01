@@ -18,6 +18,9 @@ class TweetDeleteView(DeleteView):
         return tweet
 
     def get_success_url(self):
+        next_url = self.request.GET.get('next')
+        if next_url:
+            return next_url
         return reverse('index')
 
 
@@ -45,5 +48,5 @@ class TweetListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(TweetListView, self).get_context_data(**kwargs)
-        context['form'] = TweetForm()
+        context['new_tweet_form'] = TweetForm()
         return context

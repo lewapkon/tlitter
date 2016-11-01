@@ -4,49 +4,7 @@
 
 {% block content %}
     {% if user.is_authenticated %}
-        <form action="{% url 'new_tweet' %}" method="post">
-            {% csrf_token %}
-            {{ form.body }}
-            <input type="submit" value="Tłit" />
-        </form>
+        {% include 'new_tweet_form.html' with form=new_tweet_form %}
     {% endif %}
-
-    {% if tweet_list %}
-        <h2>Tłits</h2>
-        <ul>
-            {% for tweet in tweet_list %}
-                <li class="tweet">
-                    <div class="header">
-                        <span class="author-name">{{ tweet.author }}</span>
-                        <span class="author-username">{{ tweet.author.username }}</span>
-                        <span class="timestamp">{{ tweet.timestamp }}</span>
-                    </div>
-                    <div class="context">{{ tweet.body }}</div>
-                    {% if tweet.author == user %}
-                        <form action="{% url 'delete_tweet' tweet.pk %}" method="post">
-                            {% csrf_token %}
-                            <input type="submit" value="Delete tłit" />
-                        </form>
-                    {% endif %}
-                </li>
-            {% endfor %}
-        </ul>
-        {% if is_paginated %}
-            <div class="pagination">
-                <span class="page-links">
-                    {% if page_obj.has_previous %}
-                        <a href="/?page={{ page_obj.previous_page_number }}">previous</a>
-                    {% endif %}
-                    <span class="page-current">
-                        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-                    </span>
-                    {% if page_obj.has_next %}
-                        <a href="/?page={{ page_obj.next_page_number }}">next</a>
-                    {% endif %}
-                </span>
-            </div>
-        {% endif %}
-    {% else %}
-        <p>No tłits found!</p>
-    {% endif %}
+    {% include 'tweets.html' with name="All" tweets=tweet_list %}
 {% endblock %}

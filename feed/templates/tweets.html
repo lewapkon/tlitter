@@ -1,0 +1,40 @@
+{% if tweets %}
+    <h2>{{ name }} tłits</h2>
+    <ul>
+        {% for tweet in tweets %}
+            <li class="tweet">
+                <div class="header">
+                    <a href="{% url 'person' tweet.author.username %}">
+                        <span class="author-name">{{ tweet.author }}</span>
+                        <span class="author-username">@{{ tweet.author.username }}</span>
+                    </a>
+                    <span class="timestamp">{{ tweet.timestamp }}</span>
+                </div>
+                <div class="context">{{ tweet.body }}</div>
+                {% if tweet.author == user %}
+                    <form action="{% url 'delete_tweet' tweet.pk %}?next={{ request.path }}" method="post">
+                        {% csrf_token %}
+                        <input type="submit" value="Delete tłit" />
+                    </form>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+    {% if is_paginated %}
+        <div class="pagination">
+            <span class="page-links">
+                {% if page_obj.has_previous %}
+                    <a href="/?page={{ page_obj.previous_page_number }}">previous</a>
+                {% endif %}
+                <span class="page-current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+                {% if page_obj.has_next %}
+                    <a href="/?page={{ page_obj.next_page_number }}">next</a>
+                {% endif %}
+            </span>
+        </div>
+    {% endif %}
+{% else %}
+    <p>No tłits found!</p>
+{% endif %}
