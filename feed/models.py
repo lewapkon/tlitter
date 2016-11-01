@@ -1,18 +1,9 @@
 # -*- coding: utf-8 -*-
-
-from __future__ import unicode_literals
 from django.utils.encoding import python_2_unicode_compatible
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
-
-@python_2_unicode_compatible
-class Person(AbstractUser):
-    class Meta:
-        verbose_name_plural = 'people'
-
-    def __str__(self):
-        return self.get_full_name()
+from accounts.models import Person
 
 
 @python_2_unicode_compatible

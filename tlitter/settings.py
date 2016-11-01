@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'feed',
+    'accounts',
     'sass_processor',
 ]
 
@@ -60,7 +61,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(BASE_DIR, 'feed/templates'),
+            os.path.join(BASE_DIR, 'accounts/templates'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -130,7 +131,7 @@ STATICFILES_DIRS = [
 ]
 SASS_PROCESSOR_ROOT = 'static/'
 
-AUTH_USER_MODEL = 'feed.Person'
+AUTH_USER_MODEL = 'accounts.Person'
 
 LOGIN_URL = reverse_lazy('login')
 LOGIN_REDIRECT_URL = reverse_lazy('index')

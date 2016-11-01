@@ -1,25 +1,10 @@
 # -*- coding: utf-8 -*-
-from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect
-from django.urls import reverse, reverse_lazy
-from django.views.generic import CreateView, DeleteView, ListView, FormView
+from django.urls import reverse
+from django.views.generic import CreateView, DeleteView, ListView
 
-from .forms import TweetForm, RegistrationForm
+from .forms import TweetForm
 from .models import Tweet
-
-
-class RegistrationView(FormView):
-    template_name = 'registration/register.html'
-    form_class = RegistrationForm
-    success_url = reverse_lazy('index')
-
-    def form_valid(self, form):
-        form.save()
-        username = self.request.POST['username']
-        password = self.request.POST['password1']
-        user = authenticate(username=username, password=password)
-        login(self.request, user)
-        return super(RegistrationView, self).form_valid(form)
 
 
 class TweetDeleteView(DeleteView):
