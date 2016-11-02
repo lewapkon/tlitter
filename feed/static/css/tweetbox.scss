@@ -80,13 +80,10 @@ $tweet-corner-radius: 6px;
       float: right;
     }
 
-    .timestamp:before {
-      //content: "\00b7"
-    }
-
     .content {
       font-size: 14px;
       line-height: 18px;
+      word-wrap: break-word;
     }
 
     form button {
