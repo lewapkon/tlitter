@@ -1,0 +1,4 @@
+Django==1.10.2
+django-sass-processor==0.5.1
+libsass==0.11.2
+six==1.10.0
