@@ -1,0 +1,84 @@
+.form {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+
+  .form-heading {
+    margin-bottom: 10px;
+  }
+
+  .errorlist {
+    margin-top: 10px;
+
+    li {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+  }
+}
+
+#form-signup {
+  input[name=username] {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  input[name=first_name], input[name=last_name], input[name=password1] {
+    margin-bottom: -1px;
+    border-radius: 0;
+  }
+
+  input[name=password2] {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+}
+
+#form-signin {
+  input[name=username] {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  input[name=password] {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+}
+
+#form-change-password {
+  input[name=old_password] {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  input[name=new_password1] {
+    margin-bottom: -1px;
+    border-radius: 0;
+  }
+
+  input[name=new_password2] {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+}
+
+#form-person-update {
+  input[name=first_name] {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  input[name=last_name] {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+}

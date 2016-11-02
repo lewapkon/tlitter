@@ -1,5 +1,5 @@
-<form action="{% url 'new_tweet' %}" method="post">
+<form id="new-tweet" action="{% url 'new_tweet' %}" method="post">
     {% csrf_token %}
     {{ form.body }}
-    <input type="submit" value="Tłit" />
+    <button class="btn btn-primary" type="submit"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Tłit</button>
 </form>

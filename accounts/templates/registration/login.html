@@ -3,9 +3,14 @@
 {% block title %}Login | {{ block.super }}{% endblock %}
 
 {% block content %}
-    <form action="{% url 'login' %}" method="post">
+    <form class="form" id="form-signin" action="{% url 'login' %}" method="post">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Login</button>
+        <h2 class="form-heading">Please sign in</h2>
+        {% include 'error_form.html' with errors=form.non_field_errors %}
+        {% include 'error_form.html' with errors=form.username.errors %}
+        {{ form.username }}
+        {% include 'error_form.html' with errors=form.password.errors %}
+        {{ form.password }}
+        <button type="submit" class="btn btn-primary btn-block">Login</button>
     </form>
 {% endblock %}

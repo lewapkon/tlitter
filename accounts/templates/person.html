@@ -3,18 +3,18 @@
 {% block title %}{{ block.super }}{% endblock %}
 
 {% block content %}
-    {% if user and user != person %}
+    {% if user.is_authenticated and user != person %}
         {% if follows %}
             <form action="{% url 'unfollow' person.pk %}" method="post">
                 {% csrf_token %}
-                <button type="submit">Unfollow</button>
+                <button class="btn btn-secondary" type="submit">Unfollow</button>
             </form>
         {% else %}
             <form action="{% url 'follow' person.pk %}" method="post">
                 {% csrf_token %}
-                <button type="submit">Follow</button>
+                <button class="btn btn-secondary" type="submit">Follow</button>
             </form>
         {% endif %}
     {% endif %}
-    {% include 'tweets.html' with name=person_name tweets=tweets %}
+    {% include 'tweets.html' with name=person_name tweets=tweet_list show_input=False %}
 {% endblock %}

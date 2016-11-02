@@ -1,6 +1,9 @@
 {% if tweets %}
     <h2>{{ name }} tłits</h2>
-    <ul>
+    <ul id="tweetbox">
+        {% if show_input %}
+            <li>{% include 'new_tweet_form.html' with form=new_tweet_form %}</li>
+        {% endif %}
         {% for tweet in tweets %}
             <li class="tweet">
                 <div class="header">
@@ -8,32 +11,40 @@
                         <span class="author-name">{{ tweet.author }}</span>
                         <span class="author-username">@{{ tweet.author.username }}</span>
                     </a>
-                    <span class="timestamp">{{ tweet.timestamp }}</span>
+                    <span class="timestamp" data-toggle="tooltip" title="{{ tweet.timestamp }}">{{ tweet.timestamp | timesince }} ago</span>
                 </div>
-                <div class="context">{{ tweet.body }}</div>
+                <div class="content"><p>{{ tweet.body }}</p></div>
                 {% if tweet.author == user %}
                     <form action="{% url 'delete_tweet' tweet.pk %}?next={{ request.path }}" method="post">
                         {% csrf_token %}
-                        <input type="submit" value="Delete tłit" />
+                        <button type="submit" class="clear" value="Delete tłit"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
                     </form>
                 {% endif %}
             </li>
         {% endfor %}
     </ul>
     {% if is_paginated %}
-        <div class="pagination">
-            <span class="page-links">
+        <nav>
+            <ul class="pagination">
                 {% if page_obj.has_previous %}
-                    <a href="/?page={{ page_obj.previous_page_number }}">previous</a>
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+                {% else %}
+                    <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
                 {% endif %}
-                <span class="page-current">
-                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-                </span>
+                {% for i in page_obj.paginator.page_range %}
+                    {% if page_obj.number == i %}
+                        <li class="page-item active"><span class="page-link">{{ i }} <span class="sr-only">(current)</span></span></li>
+                    {% else %}
+                        <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                    {% endif %}
+                {% endfor %}
                 {% if page_obj.has_next %}
-                    <a href="/?page={{ page_obj.next_page_number }}">next</a>
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+                {% else %}
+                    <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
                 {% endif %}
-            </span>
-        </div>
+            </ul>
+        </nav>
     {% endif %}
 {% else %}
     <p>No tłits found!</p>

@@ -5,10 +5,11 @@ from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic import DetailView, FormView, UpdateView
+from django.views.generic import FormView, UpdateView
+from django.views.generic import ListView
 
 from feed.models import Tweet
-from .forms import RegistrationForm
+from .forms import RegistrationForm, PersonUpdateForm
 from .models import Person
 
 
@@ -26,9 +27,9 @@ class RegistrationView(FormView):
         return super(RegistrationView, self).form_valid(form)
 
 
-class PersonEditView(UpdateView):
+class PersonUpdateView(UpdateView):
     template_name = 'registration/person_update.html'
-    fields = ['first_name', 'last_name']
+    form_class = PersonUpdateForm
 
     def get_object(self, queryset=None):
         return self.request.user
@@ -37,18 +38,22 @@ class PersonEditView(UpdateView):
         return reverse_lazy('person', kwargs={'slug': self.get_object().username})
 
 
-class PersonDetailView(DetailView):
-    model = Person
+class PersonDetailView(ListView):
+    model = Tweet
     template_name = 'person.html'
-    context_object_name = 'person'
-    slug_field = 'username'
+    context_object_name = 'tweet_list'
+    paginate_by = 5
+
+    def get_queryset(self):
+        return Tweet.objects.filter(author__username=self.kwargs['username'])
 
     def get_context_data(self, **kwargs):
         context = super(PersonDetailView, self).get_context_data(**kwargs)
-        person = self.get_object()
-        context['tweets'] = Tweet.objects.filter(author_id=person.id)
+        person = Person.objects.get(username=self.kwargs['username'])
+        context['person'] = person
         context['person_name'] = person.get_username() + "'s"
-        context['follows'] = self.request.user.following.filter(pk=person.pk).exists()
+        if self.request.user.is_authenticated():
+            context['follows'] = self.request.user.following.filter(pk=person.pk).exists()
         return context
 
 
@@ -57,7 +62,7 @@ class FollowView(View):
         other_person = Person.objects.get(pk=kwargs['pk'])
         if not request.user.following.filter(pk=kwargs['pk']).exists():
             Person.objects.get(pk=request.user.pk).following.add(other_person)
-        return HttpResponseRedirect(reverse_lazy('person', kwargs={'slug': other_person.username}))
+        return HttpResponseRedirect(reverse_lazy('person', kwargs={'username': other_person.username}))
 
 
 class UnfollowView(View):
@@ -65,4 +70,4 @@ class UnfollowView(View):
         other_person = Person.objects.get(pk=kwargs['pk'])
         if request.user.following.filter(pk=kwargs['pk']).exists():
             Person.objects.get(pk=request.user.pk).following.remove(other_person)
-        return HttpResponseRedirect(reverse_lazy('person', kwargs={'slug': other_person.username}))
+        return HttpResponseRedirect(reverse_lazy('person', kwargs={'username': other_person.username}))

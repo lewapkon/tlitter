@@ -3,9 +3,5 @@
 {% block title %}{{ block.super }}{% endblock %}
 
 {% block content %}
-    {% if user.is_authenticated %}
-        {% include 'new_tweet_form.html' with form=new_tweet_form %}
-        <a href="{% url 'friends_tweets' %}">Show friends' tłits</a>
-    {% endif %}
-    {% include 'tweets.html' with name="All" tweets=tweet_list %}
+    {% include 'tweets.html' with name="All" tweets=tweet_list show_input=user.is_authenticated %}
 {% endblock %}

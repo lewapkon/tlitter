@@ -1,0 +1,102 @@
+$tweet-background-color: #e1e8ed;
+$tweet-corner-radius: 6px;
+
+::-webkit-input-placeholder {
+   color: rgb(204, 214, 221);
+}
+
+:-moz-placeholder {
+   color: rgb(204, 214, 221);
+}
+
+::-moz-placeholder {
+   color: rgb(204, 214, 221);
+}
+
+:-ms-input-placeholder {
+   color: rgb(204, 214, 221);
+}
+
+#tweetbox {
+  &>* {
+    border-left: 1px solid $tweet-background-color;
+    border-right: 1px solid $tweet-background-color;
+    border-top: 1px solid $tweet-background-color;
+    background-clip: padding-box;
+    display: block;
+
+    &:first-child {
+      border-top-left-radius: $tweet-corner-radius;
+      border-top-right-radius: $tweet-corner-radius;
+    }
+
+    &:last-child {
+      border-bottom: 1px solid $tweet-background-color;
+      border-bottom-left-radius: $tweet-corner-radius;
+      border-bottom-right-radius: $tweet-corner-radius;
+    }
+  }
+
+  form {
+    margin: 0;
+  }
+
+  #new-tweet {
+    color: rgb(41, 47, 51);
+    background-color: rgb(229, 242, 247);
+    text-align: right;
+    padding: 9px 12px;
+    font-size: 14px;
+
+    input {
+      border: 1px solid rgb(153, 205, 225);
+      margin-bottom: 8px;
+    }
+  }
+
+  .tweet {
+    background: #fff;
+    padding: 9px 12px;
+
+    a {
+      text-decoration: none;
+
+      &:hover .author-name {
+        text-decoration: underline;
+      }
+    }
+
+    .author-name {
+      font-weight: bold;
+      color: #292f33;
+    }
+
+    .author-username, .timestamp {
+      font-size: 13px;
+      color: #8899a6;
+    }
+
+    .timestamp {
+      float: right;
+    }
+
+    .timestamp:before {
+      //content: "\00b7"
+    }
+
+    .content {
+      font-size: 14px;
+      line-height: 18px;
+    }
+
+    form button {
+      font-size: 26px;
+      color: rgb(170, 184, 194);
+
+      &:hover {
+        color: rgb(0, 132, 180);
+        cursor: pointer;
+      }
+    }
+  }
+}

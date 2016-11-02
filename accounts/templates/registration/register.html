@@ -3,9 +3,20 @@
 {% block title %}Register | {{ block.super }}{% endblock %}
 
 {% block content %}
-    <form action="{% url 'register' %}" method="post">
+    <form class="form" id="form-signup" action="{% url 'register' %}" method="post">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Sign up</button>
+        <h6 class="form-heading">Please fill the form below to register</h6>
+        {% include 'error_form.html' with errors=form.non_field_errors %}
+        {% include 'error_form.html' with errors=form.username.errors %}
+        {{ form.username }}
+        {% include 'error_form.html' with errors=form.first_name.errors %}
+        {{ form.first_name }}
+        {% include 'error_form.html' with errors=form.last_name.errors %}
+        {{ form.last_name }}
+        {% include 'error_form.html' with errors=form.password1.errors %}
+        {{ form.password1 }}
+        {% include 'error_form.html' with errors=form.password2.errors %}
+        {{ form.password2 }}
+        <button type="submit" class="btn btn-primary btn-block">Sign up</button>
     </form>
 {% endblock %}
