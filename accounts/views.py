@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-from __future__ import print_function
-
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
@@ -58,7 +56,7 @@ class PersonDetailView(ListView):
 
 
 class FollowView(View):
-    def post(self, request, *args, **kwargs):
+    def post(self, request, **kwargs):
         other_person = Person.objects.get(pk=kwargs['pk'])
         if not request.user.following.filter(pk=kwargs['pk']).exists():
             Person.objects.get(pk=request.user.pk).following.add(other_person)
@@ -66,7 +64,7 @@ class FollowView(View):
 
 
 class UnfollowView(View):
-    def post(self, request, *args, **kwargs):
+    def post(self, request, **kwargs):
         other_person = Person.objects.get(pk=kwargs['pk'])
         if request.user.following.filter(pk=kwargs['pk']).exists():
             Person.objects.get(pk=request.user.pk).following.remove(other_person)
