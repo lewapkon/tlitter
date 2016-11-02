@@ -35,7 +35,7 @@ class PersonUpdateView(UpdateView):
         return self.request.user
 
     def get_success_url(self):
-        return reverse_lazy('person', kwargs={'slug': self.get_object().username})
+        return reverse_lazy('person', kwargs={'username': self.get_object().username})
 
 
 class PersonDetailView(ListView):
