@@ -10,5 +10,4 @@ urlpatterns = [
     url(r'^delete/(?P<pk>\d+)$', login_required(TweetDeleteView.as_view()), name='delete_tweet'),
     url(r'^friends-tweets/$', login_required(FriendsTweetsView.as_view()), name='friends_tweets'),
     url(r'^toggle_like/(?P<pk>\d+)$', login_required(ToggleLikeView.as_view()), name='toggle_like_tweet'),
-    # url(r'^statistics/$', login_required(StatisticsView.as_view()), name='statistics'),
 ]

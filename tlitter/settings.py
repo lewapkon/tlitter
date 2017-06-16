@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'sass_processor',
     'feed',
     'accounts',
+    'statistics',
 ]
 
 MIDDLEWARE = [

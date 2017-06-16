@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}{{ block.super }}{% endblock %}
+
+{% block content %}
+  <h2>Statistics</h2>
+  <h3>Number of tweets every month</h3>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Month</th>
+        <th>Count</th>
+    </thead>
+    <tbody>
+      {% for month, count in count_stats.items %}
+        <tr>
+          <td>{{ month }}</td>
+          <td>{{ count }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

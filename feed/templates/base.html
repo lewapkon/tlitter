@@ -16,6 +16,9 @@
             <div class="header clearfix">
                 <nav>
                     <ul class="nav nav-pills float-xs-right">
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-secondary" href="{% url 'statistics' %}">Statistics</a>
+                        </li>
                         {% if user.is_authenticated %}
                             <li class="nav-item">
                                 <a class="nav-link btn btn-secondary" href="{% url 'friends_tweets' %}">Friends' tłits</a>
