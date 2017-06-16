@@ -1,25 +1,10 @@
 <h2>{{ name }} tłits</h2>
 <ul id="tweetbox">
     {% if show_input %}
-        <li>{% include 'new_tweet_form.html' with form=new_tweet_form %}</li>
+        <li>{% include 'new_tweet_form.html' with form=new_tweet_form user=user %}</li>
     {% endif %}
     {% for tweet in tweets %}
-        <li class="tweet">
-            <div class="header">
-                <a href="{% url 'person' tweet.author.username %}">
-                    <span class="author-name">{{ tweet.author }}</span>
-                    <span class="author-username">@{{ tweet.author.username }}</span>
-                </a>
-                <span class="timestamp" data-toggle="tooltip" title="{{ tweet.timestamp }}">{{ tweet.timestamp | timesince }} ago</span>
-            </div>
-            <div class="content"><p>{{ tweet.body }}</p></div>
-            {% if tweet.author == user %}
-                <form action="{% url 'delete_tweet' tweet.pk %}?next={{ request.path }}" method="post">
-                    {% csrf_token %}
-                    <button type="submit" class="clear" value="Delete tłit"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
-                </form>
-            {% endif %}
-        </li>
+        {% include 'tweet.html' with tweet=tweet %}
     {% endfor %}
 </ul>
 {% if is_paginated %}

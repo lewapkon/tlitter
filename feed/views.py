@@ -2,6 +2,7 @@
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views.generic import CreateView, DeleteView, ListView
+from django.views.generic.base import View
 
 from .models import Tweet, Person
 from .forms import TweetForm
@@ -60,3 +61,14 @@ class FriendsTweetsView(ListView):
 
     def get_queryset(self):
         return Tweet.objects.filter(author__in=Person.objects.get(pk=self.request.user.pk).following.all())
+
+
+class ToggleLikeView(View):
+    def post(self, request, pk, *args, **kwargs):
+        tweet = Tweet.objects.get(pk=pk)
+        author = request.user
+        if tweet.likers.filter(pk=author.pk).exists():
+            tweet.likers.remove(author)
+        else:
+            tweet.likers.add(author)
+        return HttpResponseRedirect(request.GET.get('next'))
