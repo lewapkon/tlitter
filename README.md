@@ -10,11 +10,13 @@ User can:
 * browse all tweets,
 * browse any user's tweets,
 * follow other users,
-* browse followed users' tweets.
+* browse followed users' tweets,
+* like and dislike tweets,
+* see how many tweets were posted every month.
 
 To run you need to:
 ````
-$ pip install -r requirements.txt 
-$ ./manage.py migrate 
+$ pip install -r requirements.txt
+$ ./manage.py migrate
 $ ./manage.py runserver
 ````
