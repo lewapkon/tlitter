@@ -11,14 +11,14 @@
         </span>
     </div>
     <div class="content"><p>{{ tweet.body }}</p></div>
-    <form action="{% url 'toggle_like_tweet' tweet.pk %}?next={{ request.path }}" method="post" class="d-inline">
+    <form action="{% url 'toggle_like_tweet' tweet.pk %}?next={{ request.get_full_path }}" method="post" class="d-inline">
       {% csrf_token %}
       <button type="submit" class="clear" value="Like tłit">
         <span class="fa {% if tweet|is_liked:user %}fa-heart{% else %}fa-heart-o{% endif %}" aria-hidden="true"></span>
       </button>
     </form>
-    {% if tweet.author == user %}
-        <form action="{% url 'delete_tweet' tweet.pk %}?next={{ request.path }}" method="post" class="d-inline">
+    {% if tweet.author == user or user.is_superuser %}
+        <form action="{% url 'delete_tweet' tweet.pk %}?next={{ request.get_full_path }}" method="post" class="d-inline">
             {% csrf_token %}
             <button type="submit" class="clear" value="Delete tłit">
               <span class="fa fa-trash-o" aria-hidden="true"></span>

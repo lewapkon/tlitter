@@ -3,6 +3,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views.generic import CreateView, DeleteView, ListView
 from django.views.generic.base import View
+from django.core.paginator import EmptyPage
 
 from .models import Tweet, Person
 from .forms import TweetForm
@@ -12,7 +13,9 @@ class TweetDeleteView(DeleteView):
     model = Tweet
 
     def get_queryset(self):
-        return self.request.user.tweet_set.all()
+        if self.request.user.is_superuser:
+            return Tweet.objects.all()
+        return self.request.user.authored_tweets.all()
 
     def get_object(self, queryset=None):
         tweet = super(TweetDeleteView, self).get_object()
@@ -47,6 +50,13 @@ class TweetListView(ListView):
     context_object_name = "tweet_list"
     paginate_by = 5
 
+    def get_paginator(self, queryset, per_page, orphans=0, allow_empty_first_page=True):
+        paginator = super(TweetListView, self).get_paginator(queryset, per_page, orphans=orphans,
+            allow_empty_first_page=allow_empty_first_page)
+        self.kwargs['page'] = min(self.kwargs.get('page', 1), paginator.num_pages)
+
+        return paginator
+
     def get_context_data(self, **kwargs):
         context = super(TweetListView, self).get_context_data(**kwargs)
         context['new_tweet_form'] = TweetForm()
@@ -58,6 +68,13 @@ class FriendsTweetsView(ListView):
     template_name = 'friends-tweets.html'
     context_object_name = "tweet_list"
     paginate_by = 5
+
+    def get_paginator(self, queryset, per_page, orphans=0, allow_empty_first_page=True):
+        paginator = super(FriendsTweetsView, self).get_paginator(queryset, per_page,
+            orphans=orphans, allow_empty_first_page=allow_empty_first_page)
+        self.kwargs['page'] = min(self.kwargs.get('page', 1), paginator.num_pages)
+
+        return paginator
 
     def get_queryset(self):
         return Tweet.objects.filter(author__in=Person.objects.get(pk=self.request.user.pk).following.all())
